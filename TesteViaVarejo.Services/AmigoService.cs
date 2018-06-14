@@ -66,8 +66,8 @@ namespace TesteViaVarejo.Services
             var ListaCoordAmigos = _amigoRepository.GetBy(x => x.Id != amigoDb.Id)
                               .Select(x => new GeoCoordinate(double.Parse(x.Latitude, CultureInfo.InvariantCulture), double.Parse(x.Longitude, CultureInfo.InvariantCulture)))
                               .OrderBy(x => x.GetDistanceTo(coord))
-                              .ToList()
                               .Take(quantidade)
+                              .ToList()
                               .Select(x => 
                               new {
                                   Latitude = x.Latitude.ToString(CultureInfo.InvariantCulture),

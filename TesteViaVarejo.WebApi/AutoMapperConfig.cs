@@ -18,6 +18,13 @@ namespace TesteViaVarejo.WebApi
             CreateMap<User, UserModel>().ReverseMap();
 
             #endregion
+
+            #region Model to Domain
+
+            CreateMap<LoginAuthModel, User>().ForMember(dest => dest.Login, opt => opt.MapFrom(src => src.Login));
+            CreateMap<LoginAuthModel, User>().ForMember(dest => dest.Senha, opt => opt.MapFrom(src => src.Senha));
+
+            #endregion
         }
 
     }

@@ -10,7 +10,7 @@ namespace TesteViaVarejo.Services
 {
     public class UserService : ServiceBase, IDisposable
     {
-        public ServiceOptions _options { get; set; }
+       
         private UserRepository _userRepository { get; set; }
 
         public UserService(string ConnectionString)
@@ -59,9 +59,9 @@ namespace TesteViaVarejo.Services
                 _userRepository.InsertOrUpdate(user);
                 return user;
             }
-            catch
+            catch (Exception ex)
             {
-                throw;
+                throw new TesteViaVarejoErrorHandler(ex.Message);
             }
         }
 
@@ -74,9 +74,9 @@ namespace TesteViaVarejo.Services
                 _userRepository.InsertOrUpdate(userActivate);
                 return userActivate;
             }
-            catch
+            catch (Exception ex)
             {
-                throw;
+                throw new TesteViaVarejoErrorHandler(ex.Message); ;
             }
         }
 
@@ -94,11 +94,10 @@ namespace TesteViaVarejo.Services
         {
 
             //Validando se já existe login
-            if (_userRepository.GetBy(x => x.Login == user.Login).Any())
-                throw new TesteViaVarejoErrorHandler("Login já cadastrados.");
+            if (_userRepository.GetBy(x => x.Login == user.Login && x.Id != user.Id).Any())
+                throw new TesteViaVarejoErrorHandler("Login já cadastrado para outro usuário.");
 
-            if (!(_userRepository.GetBy(x => x.Login == user.Login && x.Senha == user.Senha).Any()))
-                throw new TesteViaVarejoErrorHandler("Login ou Senha inválidos. Tente novamente.");
+            
 
 
         }

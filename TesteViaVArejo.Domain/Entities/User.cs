@@ -30,5 +30,7 @@ namespace TesteViaVArejo.Domain.Entities
 
         [Required(ErrorMessage = "Campo Obrigatório")]
         public bool Ativo { get; set; }
+
+        
     }
 }

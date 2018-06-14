@@ -25,6 +25,9 @@ namespace TesteViaVarejo.Repository.Context
             base.OnConfiguring(optionsBuilder);
         }
 
+        public DbSet<Amigo> Amigos { get; set; }
+        public DbSet<User> Users { get; set; }
+
 
     }
 }

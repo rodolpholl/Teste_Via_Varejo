@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TesteViaVarejo.Services.Factory;
@@ -14,8 +15,12 @@ namespace TesteViaVarejo.WebApi.Controllers
     [Produces("application/json")]
     [Route("api/[controller]")]
     [ApiController]
-    public class UserController : BaseControler
+    [Authorize("Bearer")]
+    public class UserController : ControllerBase
     {
+        private readonly IMapper _mapper;
+        private readonly ServiceOptions _serviceOptions;
+
         public UserController(IMapper mapper, ServiceOptions serviceOptions)
         {
             this._mapper = mapper;
@@ -31,9 +36,9 @@ namespace TesteViaVarejo.WebApi.Controllers
                 {
                     return Ok(_mapper.Map<IList<UserModel>>(userService.ListarUsers()));
                 }
-                catch
+                catch (Exception ex)
                 {
-                    return StatusCode(500);
+                    return StatusCode(500, ex.Message);
 
                 }
             }
@@ -46,11 +51,12 @@ namespace TesteViaVarejo.WebApi.Controllers
             {
                 try
                 {
-                    return Ok(userService.GetUsersById(id));
+
+                    return Ok(_mapper.Map<UserModel>(userService.GetUsersById(id)));
                 }
-                catch
+                catch (Exception ex)
                 {
-                    return StatusCode(500);
+                    return StatusCode(500, ex.Message);
 
                 }
             }
@@ -64,11 +70,12 @@ namespace TesteViaVarejo.WebApi.Controllers
                 try
                 {
                     var amigo = userService.AddUser(_mapper.Map<User>(model));
+                    amigo.Senha = string.Empty;
                     return Ok(_mapper.Map<UserModel>(amigo));
                 }
-                catch
+                catch (Exception ex)
                 {
-                    return StatusCode(500);
+                    return StatusCode(500,ex.Message);
                 }
             }
         }
@@ -81,11 +88,12 @@ namespace TesteViaVarejo.WebApi.Controllers
                 try
                 {
                     var amigo = userService.UpdateUser(_mapper.Map<User>(model));
+                    amigo.Senha = string.Empty;
                     return Ok(_mapper.Map<UserModel>(amigo));
                 }
-                catch
+                catch (Exception ex)
                 {
-                    return StatusCode(500);
+                    return StatusCode(500, ex.Message);
                 }
             }
         }
@@ -101,9 +109,9 @@ namespace TesteViaVarejo.WebApi.Controllers
                     userService.ActivateUser(new User() { Id = id });
                     return Ok();
                 }
-                catch
+                catch (Exception ex)
                 {
-                    return StatusCode(500);
+                    return StatusCode(500, ex.Message);
                 }
 
             }
@@ -119,9 +127,9 @@ namespace TesteViaVarejo.WebApi.Controllers
                     userService.DeactivateUser(new User() { Id = id });
                     return Ok();
                 }
-                catch
+                catch (Exception ex)
                 {
-                    return StatusCode(500);
+                    return StatusCode(500, ex.Message);
                 }
 
             }

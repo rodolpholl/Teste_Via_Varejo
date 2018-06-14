@@ -28,4 +28,6 @@
     <ProjectReference Include="..\TesteViaVarejo.Services\TesteViaVarejo.Services.csproj" />
   </ItemGroup>
 
+  <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JSONSchema="http://json.schemastore.org/bowerrc" /></VisualStudio></ProjectExtensions>
+
 </Project>

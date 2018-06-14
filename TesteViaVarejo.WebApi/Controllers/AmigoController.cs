@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TesteViaVarejo.Services.Factory;
@@ -14,9 +15,12 @@ namespace TesteViaVarejo.WebApi.Controllers
     [Produces("application/json")]
     [Route("api/[controller]")]
     [ApiController]
-    public class AmigoController : BaseControler
+    [Authorize("Bearer")]
+    public class AmigoController : ControllerBase
     {
-        
+        private readonly IMapper _mapper;
+        private readonly ServiceOptions _serviceOptions;
+
         public AmigoController(IMapper mapper, ServiceOptions serviceOptions)
         {
             this._mapper = mapper;
@@ -31,12 +35,12 @@ namespace TesteViaVarejo.WebApi.Controllers
             {
                 try
                 {
-                    
                     return Ok(_mapper.Map<IList<AmigoModel>>(amigoService.ListarAmigos()));
+                   
                 }
-                catch
+                catch (Exception ex)
                 {
-                    return StatusCode(500);
+                    return StatusCode(500, ex.Message);
 
                 }
             }
@@ -49,18 +53,18 @@ namespace TesteViaVarejo.WebApi.Controllers
             {
                 try
                 {
-                    return Ok(amigoService.GetAmigoById(id));
+                    return Ok(_mapper.Map<AmigoModel>(amigoService.GetAmigoById(id)));
                 }
-                catch
+                catch (Exception ex)
                 {
-                    return StatusCode(500);
+                    return StatusCode(500, ex.Message);
 
                 }
             }
         }
 
         [HttpPost]
-        public IActionResult Add(AmigoModel model)
+        public IActionResult Add([FromBody]AmigoModel model)
         {
             using (var amigoService = new AmigoFactory(_serviceOptions).Build())
             {
@@ -69,15 +73,15 @@ namespace TesteViaVarejo.WebApi.Controllers
                     var amigo = amigoService.AddAmigo(_mapper.Map<Amigo>(model));
                     return Ok(_mapper.Map<AmigoModel>(amigo));
                 }
-                catch
+                catch (Exception ex)
                 {
-                    return StatusCode(500);
+                    return StatusCode(500, ex.Message);
                 }
             }
         }
 
         [HttpPut]
-        public IActionResult Update(AmigoModel model)
+        public IActionResult Update([FromBody]AmigoModel model)
         {
             using (var amigoService = new AmigoFactory(_serviceOptions).Build())
             {
@@ -86,9 +90,9 @@ namespace TesteViaVarejo.WebApi.Controllers
                     var amigo = amigoService.UpdateAmigo(_mapper.Map<Amigo>(model));
                     return Ok(_mapper.Map<AmigoModel>(amigo));
                 }
-                catch
+                catch (Exception ex)
                 {
-                    return StatusCode(500);
+                    return StatusCode(500, ex.Message);
                 }
             }
         }
@@ -104,11 +108,29 @@ namespace TesteViaVarejo.WebApi.Controllers
                     amigoService.DeleteAmigo(new Amigo() { Id = id });
                     return Ok();
                 }
-                catch
+                catch (Exception ex)
                 {
-                    return StatusCode(500);
+                    return StatusCode(500, ex.Message);
                 }
                 
+            }
+        }
+
+
+        [HttpGet("AmigosProximos/{id}/{quantidade}")]
+        public IActionResult GetListaAmigosProximos(int id, int quantidade)
+        {
+            using (var amigoService = new AmigoFactory(_serviceOptions).Build())
+            {
+                try
+                {
+                    return Ok(_mapper.Map<IList<AmigoModel>>(amigoService.GetAmigosProximos(new Amigo() { Id = id }, quantidade)));
+                }
+                catch (Exception ex)
+                {
+                    return StatusCode(500, ex.Message);
+                }
+
             }
         }
     }

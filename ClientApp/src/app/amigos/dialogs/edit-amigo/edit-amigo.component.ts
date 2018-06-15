@@ -34,8 +34,7 @@ export class EditAmigoComponent  {
 
     stopEdit(): void {
       this.amigoService.editAmigo(this.data);
-      
-      this.dialogRef.close();
+     
     }
 
 }

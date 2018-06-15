@@ -72,15 +72,8 @@ export class AmigosComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result === 1) {
-       
-        // When using an edit things are little different, firstly we find record inside DataService by id
-        const foundIndex = this.amigoDatabase.dataChange.value.findIndex(x => x.id === this.id);
-        console.log(foundIndex);
-        // Then you update that record using data from dialogData (values you enetered)
-        this.amigoDatabase.dataChange.value[foundIndex] = this.amigoDatabase.getDialogData();
-        
-        // And lastly refresh table
-        this.refreshTable();
+      
+        this.refresh();
       }
     });
   }

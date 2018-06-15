@@ -1,7 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { AmigoModel } from "../models/amigo";
-import { Observable } from "rxjs/Observable";
 import { BehaviorSubject } from "rxjs";
 
 @Injectable()
@@ -19,7 +18,7 @@ export class AmigoService {
         return this.dataChange.value;
     }
     
-    getDialogData() {
+    public getDialogData() {
         return this.dialogData;
     }
 
@@ -35,7 +34,7 @@ export class AmigoService {
     addAmigo(amigo: AmigoModel): void{
 
         this.http.post<AmigoModel>(this.BaseURL,amigo).subscribe(data => {
-            console.log("retorno: "+ JSON.stringify(data));
+     
             this.dialogData = data;
         },
         (error: HttpErrorResponse) => {
@@ -43,19 +42,18 @@ export class AmigoService {
         });
     }
 
-    editAmigo(amigo: AmigoModel){
+    editAmigo(amigo: AmigoModel): void{
         this.http.put<AmigoModel>(this.BaseURL,amigo).subscribe(data => {
                 
             this.dialogData = data;
             
-            
         },
         (error: HttpErrorResponse) => {
         console.log (error.name + ' ' + error.message);
         });
     }
 
-    deleteAmigo(id: number){
+    deleteAmigo(id: number): void{
     
         this.http.delete<AmigoModel>(`${this.BaseURL}/${id}`).subscribe(data => {
             this.dialogData = data;

@@ -1,7 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { UserModel } from "../models/user";
-import { Observable } from "rxjs/Observable";
 import { BehaviorSubject } from "rxjs";
 
 

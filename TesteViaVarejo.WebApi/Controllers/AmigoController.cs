@@ -119,21 +119,6 @@ namespace TesteViaVarejo.WebApi.Controllers
         }
 
 
-        [HttpGet("AmigosProximos/{id}/{quantidade}")]
-        public IActionResult GetListaAmigosProximos(int id, int quantidade)
-        {
-            using (var amigoService = new AmigoFactory(_serviceOptions).Build())
-            {
-                try
-                {
-                    return Ok(_mapper.Map<IList<AmigoModel>>(amigoService.GetAmigosProximos(new Amigo() { Id = id }, quantidade)));
-                }
-                catch (Exception ex)
-                {
-                    return StatusCode(500, ex.Message);
-                }
-
-            }
-        }
+        
     }
 }

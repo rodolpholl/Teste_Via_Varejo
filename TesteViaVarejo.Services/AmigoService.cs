@@ -40,6 +40,11 @@ namespace TesteViaVarejo.Services
             return amigo;
         }
 
+        public IList<Amigo> GetLsitaAmigos(int id)
+        {
+            return _amigoRepository.GetBy(x => x.Id != id).ToList();
+        }
+
         public Amigo UpdateAmigo(Amigo amigo)
         {
             Validate(amigo);
@@ -57,9 +62,9 @@ namespace TesteViaVarejo.Services
             return _amigoRepository.GetOne(id);
         }
 
-        public IList<Amigo> GetAmigosProximos(Amigo amigo, int quantidade)
+        public IList<Amigo> GetAmigosProximos(int IdAmigo, int quantidade)
         {
-            var amigoDb = _amigoRepository.GetOne(amigo.Id);
+            var amigoDb = _amigoRepository.GetOne(IdAmigo);
 
             var coord = new GeoCoordinate(double.Parse(amigoDb.Latitude, CultureInfo.InvariantCulture), double.Parse(amigoDb.Longitude, CultureInfo.InvariantCulture));
 

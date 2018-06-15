@@ -21,7 +21,8 @@ export class LoginComponent  {
     this.loginService.login(this.loginModel).subscribe(
       data => {
         this.token.saveToken(data.accessToken);
-        this.router.navigate(['users']);
+        this.token.saveLoggedUser(data.idLoggedUser);
+        this.router.navigate(['distancias']);
       }
     );
   }

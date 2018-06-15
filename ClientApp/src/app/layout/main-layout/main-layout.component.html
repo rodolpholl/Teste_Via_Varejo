@@ -8,9 +8,10 @@
     [opened]="!(isHandset$ | async)">
     <mat-toolbar color="primary">Menu</mat-toolbar>
     <mat-nav-list>
+      <a mat-list-item href="#" routerLink="/distancias" routerLinkActive="active">Distancias</a>
       <a mat-list-item href="#" routerLink="/users" routerLinkActive="active" >Usuário</a>
       <a mat-list-item href="#" routerLink="/amigos" routerLinkActive="active" >Amigos</a>
-      <a mat-list-item href="#">Link 3</a>
+      
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
@@ -25,6 +26,8 @@
       </button>
       <span>Teste Via Varejo</span>
     </mat-toolbar>
-    <ng-content></ng-content>
+    <div class="conteudo">
+      <ng-content></ng-content>
+    </div>
   </mat-sidenav-content>
 </mat-sidenav-container>

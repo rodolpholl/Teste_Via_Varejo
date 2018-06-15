@@ -18,7 +18,15 @@ export class TokenStorage {
     window.sessionStorage.setItem(TOKEN_KEY, token);
   }
 
+  public saveLoggedUser(idLoggedUser: number){
+    window.sessionStorage.removeItem("loggedUser");
+    window.sessionStorage.setItem("loggedUser",idLoggedUser.toString());
+  }
+
   public getToken(): string {
     return sessionStorage.getItem(TOKEN_KEY);
+  }
+  public getLoggedUser(): string{
+    return sessionStorage.getItem("loggedUser");
   }
 }

@@ -11,3 +11,8 @@ body {
     margin: 0px;
     
 }
+
+.controlesTopo,
+.conteudo {
+    margin: 2px;
+}

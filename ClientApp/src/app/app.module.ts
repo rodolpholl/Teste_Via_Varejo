@@ -23,6 +23,9 @@ import { AddAmigoComponent } from './amigos/dialogs/add-amigo/add-amigo.componen
 import { EditAmigoComponent } from './amigos/dialogs/edit-amigo/edit-amigo.component';
 import { DeleteAmigoComponent } from './amigos/dialogs/delete-amigo/delete-amigo.component';
 import { AmigoService } from './amigos/amigos.service';
+import { DistanciasComponent } from './distancias/distancias.component';
+import { DistanciasService } from './distancias/distancias.service';
+import { DetalheComponent } from './distancias/detalhe/detalhe/detalhe.component';
 
 
 
@@ -40,7 +43,9 @@ import { AmigoService } from './amigos/amigos.service';
     DeleteUserComponent,
     AddAmigoComponent,
     EditAmigoComponent,
-    DeleteAmigoComponent    
+    DeleteAmigoComponent,
+    DistanciasComponent,
+    DetalheComponent    
   ],
   imports: [
     BrowserModule,
@@ -65,7 +70,7 @@ import { AmigoService } from './amigos/amigos.service';
     EditAmigoComponent,
     DeleteAmigoComponent  
   ],
-  providers: [ErrorDialogComponent, AuthService, TokenStorage, UserService, AmigoService,
+  providers: [ErrorDialogComponent, AuthService, TokenStorage, UserService, AmigoService, DistanciasService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: Interceptor,

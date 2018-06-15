@@ -46,7 +46,7 @@ namespace TesteViaVarejo.WebApi.Controllers
             {
                 using (var loginService = new LoginFactory(_serviceOptions).Build())
                 {
-                    loginService.EfetuarLogin(user);
+                    var loggedUSer = loginService.EfetuarLogin(user);
 
                     var identity = new ClaimsIdentity(new GenericIdentity(user.Login, "Login"), new[]
                     {
@@ -75,6 +75,7 @@ namespace TesteViaVarejo.WebApi.Controllers
                     return new
                     {
                         authenticated = true,
+                        idLoggedUser = loggedUSer.Id,
                         created = dataCriacao.ToString("yyyy-MM-dd HH:mm:ss"),
                         expiration = dataExpiracao.ToString("yyyy-MM-dd HH:mm:ss"),
                         accessToken = token,

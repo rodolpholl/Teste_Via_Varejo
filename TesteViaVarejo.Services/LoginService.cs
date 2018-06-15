@@ -27,7 +27,7 @@ namespace TesteViaVarejo.Services
             GC.Collect();
         }
 
-        public void EfetuarLogin(User user)
+        public User EfetuarLogin(User user)
         {
 
             var userDb = _userRepository.GetBy(x => x.Login == user.Login).FirstOrDefault();
@@ -37,6 +37,8 @@ namespace TesteViaVarejo.Services
 
             if (userDb.Senha != user.Senha)
                 throw new TesteViaVarejoErrorHandler(_mensagemErroLogin);
+
+            return userDb;
         }
 
 

@@ -42,6 +42,7 @@ namespace TesteViaVarejo.Services
             {
 
                 ValidateUser(user);
+                user.Ativo = true; //Ativando o usuário recém criado
                 _userRepository.InsertOrUpdate(user);
                 return user;
             }

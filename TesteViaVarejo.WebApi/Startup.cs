@@ -19,6 +19,8 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using TesteViaVarejo.WebApi.Auth;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Cors.Infrastructure;
 
 namespace TesteViaVarejo.WebApi
 {
@@ -124,6 +126,21 @@ namespace TesteViaVarejo.WebApi
                     .RequireAuthenticatedUser().Build());
             });
 
+            // ********************
+            // Setup CORS
+            // ********************
+            var corsBuilder = new CorsPolicyBuilder();
+            corsBuilder.AllowAnyHeader();
+            corsBuilder.AllowAnyMethod();
+            corsBuilder.AllowAnyOrigin(); // For anyone access.
+            //corsBuilder.WithOrigins("http://localhost:4200"); // for a specific url. Don't add a forward slash on the end!
+            corsBuilder.AllowCredentials();
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy("SiteCorsPolicy", corsBuilder.Build());
+            });
+
 
         }
 
@@ -138,6 +155,7 @@ namespace TesteViaVarejo.WebApi
             {
                 app.UseHsts();
             }
+           
 
             app.UseHttpsRedirection();
             app.UseMvc();
@@ -150,7 +168,9 @@ namespace TesteViaVarejo.WebApi
                     "Teste Via Varejo");
             });
 
-            
+
+            app.UseCors("SiteCorsPolicy");
+
         }
     }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TesteViaVarejo.Services.Factory;
@@ -14,8 +15,10 @@ namespace TesteViaVarejo.WebApi.Controllers
 {
     [Produces("application/json")]
     [Route("api/[controller]")]
+    [EnableCors("SiteCorsPolicy")]
     [ApiController]
     [Authorize("Bearer")]
+    
     public class UserController : ControllerBase
     {
         private readonly IMapper _mapper;
@@ -69,9 +72,8 @@ namespace TesteViaVarejo.WebApi.Controllers
             {
                 try
                 {
-                    var amigo = userService.AddUser(_mapper.Map<User>(model));
-                    amigo.Senha = string.Empty;
-                    return Ok(_mapper.Map<UserModel>(amigo));
+                    var user = userService.AddUser(_mapper.Map<User>(model));
+                    return Ok(_mapper.Map<UserModel>(user));
                 }
                 catch (Exception ex)
                 {
@@ -87,9 +89,8 @@ namespace TesteViaVarejo.WebApi.Controllers
             {
                 try
                 {
-                    var amigo = userService.UpdateUser(_mapper.Map<User>(model));
-                    amigo.Senha = string.Empty;
-                    return Ok(_mapper.Map<UserModel>(amigo));
+                    var user = userService.UpdateUser(_mapper.Map<User>(model));
+                    return Ok(_mapper.Map<UserModel>(user));
                 }
                 catch (Exception ex)
                 {
@@ -107,7 +108,7 @@ namespace TesteViaVarejo.WebApi.Controllers
                 try
                 {
                     userService.ActivateUser(new User() { Id = id });
-                    return Ok();
+                    return Ok(_mapper.Map<UserModel>(userService.GetUsersById(id)));
                 }
                 catch (Exception ex)
                 {
@@ -125,7 +126,7 @@ namespace TesteViaVarejo.WebApi.Controllers
                 try
                 {
                     userService.DeactivateUser(new User() { Id = id });
-                    return Ok();
+                    return Ok(_mapper.Map<UserModel>(userService.GetUsersById(id)));
                 }
                 catch (Exception ex)
                 {

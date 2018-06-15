@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TesteViaVarejo.Services.Factory;
@@ -14,6 +15,7 @@ namespace TesteViaVarejo.WebApi.Controllers
 {
     [Produces("application/json")]
     [Route("api/[controller]")]
+    [EnableCors("SiteCorsPolicy")]
     [ApiController]
     [Authorize("Bearer")]
     public class AmigoController : ControllerBase

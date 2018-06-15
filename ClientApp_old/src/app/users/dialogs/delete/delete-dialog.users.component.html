@@ -1,0 +1,18 @@
+<div class="container">
+    <h3 mat-dialog-title>Tem Certeza??</h3>
+    <div mat-dialog-content>
+      Id: {{data.id}}
+      <p></p>
+      Nome: {{data.nome}}
+      <p></p>
+      Login: {{data.login}}
+      <p></p>
+      Ativo: {{data.ativo}}
+      <p></p>
+    </div>
+  
+    <div mat-dialog-actions>
+      <button mat-button [mat-dialog-close]="1" (click)="confirmDelete()">Delete</button>
+      <button mat-button (click)="onNoClick()" tabindex="-1">Cancelar</button>
+    </div>
+  </div>

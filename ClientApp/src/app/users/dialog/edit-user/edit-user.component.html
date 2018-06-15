@@ -1,0 +1,32 @@
+<div class="container">
+    <h3 mat-dialog-title>Editar usuário com Id: {{data.id}}</h3>
+  
+    <form class="mat-dialog-content" (ngSubmit)="submit" #formControl="ngForm">
+  
+        <div class="form">
+            <mat-form-field class="example-full-width">
+              <input matInput #input  placeholder="Nome" [(ngModel)]="data.nome" name="nome" required>
+              <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
+            </mat-form-field>
+          </div>
+      
+          <div class="form">
+            <mat-form-field class="example-full-width">
+              <input matInput #input placeholder="Login" [(ngModel)]="data.login" name="login" required>
+              <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
+            </mat-form-field>
+          </div>
+      
+          <div class="form">
+            <mat-form-field class="example-full-width">
+              <input matInput #input placeholder="Senha"  [(ngModel)]="data.senha" name="senha" required>
+              <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
+            </mat-form-field>
+          </div>
+  
+      <div mat-dialog-actions>
+        <button mat-button [type]="submit" [disabled]="!formControl.valid" [mat-dialog-close]="1" (click)="stopEdit()">Salvar</button>
+        <button mat-button (click)="onNoClick()" tabindex="-1">Cancelar</button>
+      </div>
+    </form>
+  </div>

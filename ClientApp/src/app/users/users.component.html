@@ -1,0 +1,74 @@
+<main-layout>
+
+  <mat-toolbar color="primary">
+    <span>Cadastro de Usuários</span>
+    <button mat-icon-button (click)="refresh()">
+      <mat-icon>refresh</mat-icon>
+    </button>
+  </mat-toolbar>
+  <div class="container mat-elevation-z8">
+    <div class="form">
+      <mat-form-field floatPlaceholder="never" color="accent">
+        <input matInput #filter placeholder="Filtrar Usuários">
+      </mat-form-field>
+    </div>
+
+    <mat-table #table [dataSource]="dataSource" matSort class="mat-cell">
+
+
+      <ng-container matColumnDef="Nome">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Nome </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.nome}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="Login">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Login </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.login}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="Ativo">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Ativo </mat-header-cell>
+        <mat-cell *matCellDef="let row">
+          {{row.ativo ? 'Sim' : 'Não'}}
+        </mat-cell>
+      </ng-container>
+
+      <!-- actions -->
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef>
+          <button mat-icon-button color="primary" (click)="addNew()">
+            <mat-icon aria-label="Novo Usuário">add</mat-icon>
+          </button>
+        </mat-header-cell>
+
+        <mat-cell *matCellDef="let row; let i=index;">
+          <button mat-icon-button color="accent" (click)="startEdit(i, row.id, row.nome, row.login, row.senha, row.ativo)">
+            <mat-icon aria-label="Editar">edit</mat-icon>
+          </button>
+
+          <button mat-icon-button color="accent" (click)="deleteItem(i, row.id, row.nome, row.login)">
+            <mat-icon aria-label="Delete">delete</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+
+
+      <mat-header-row *matHeaderRowDef="displayedColumns" color="primary"></mat-header-row>
+      <mat-row *matRowDef="let row; columns:displayedColumns"></mat-row>
+
+    </mat-table>
+
+    <div class="no-results" [style.display]="dataSource.renderedData.length == 0 ? '' : 'none'">
+        Nenhum Registro Encontrado!
+      </div>
+    
+      <mat-paginator #paginator
+                     [length]="dataSource.filteredData.length"
+                     [pageIndex]="0"
+                     [pageSize]="10"
+                     [pageSizeOptions]="[5, 10, 25, 100]">
+      </mat-paginator>
+
+
+  </div>
+
+
+</main-layout>

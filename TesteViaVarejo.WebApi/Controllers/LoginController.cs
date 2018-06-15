@@ -4,6 +4,7 @@ using System.Security.Claims;
 using System.Security.Principal;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using TesteViaVarejo.Services.Factory;
@@ -16,6 +17,7 @@ namespace TesteViaVarejo.WebApi.Controllers
     [Produces("application/json")]
     [Route("api/[controller]")]
     [ApiController]
+    [EnableCors("SiteCorsPolicy")]
     public class LoginController : ControllerBase
     {
 

@@ -1,3 +1,7 @@
 table {
     width: -webkit-fill-available;
 }
+
+agm-map {
+    height: 400px;
+}

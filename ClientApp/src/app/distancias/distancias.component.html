@@ -5,7 +5,7 @@
   <div class="container mat-elevation-z8">
     <div class="form">
       <mat-form-field floatPlaceholder="never" color="accent" class="controlesTopo">
-        <mat-select [(value)]="amigoSelecionado" placeholder="Selecione um amigo" (selectionChange)="getAmigosProximos()">
+        <mat-select [(value)]="idAmigoSelecionado" placeholder="Selecione um amigo" (selectionChange)="getAmigosProximos()">
             <mat-option disabled>Selecione um amigo</mat-option>
             <mat-option *ngFor="let amigo of listAmigos" [value]="amigo.id">
               {{amigo.nome}}
@@ -14,7 +14,8 @@
         </mat-select>
       </mat-form-field>
       <mat-card>
-        <app-detalhe *ngIf="listAmigosProximos.length > 0" [listAmigosProximos]="listAmigosProximos"></app-detalhe>
+        <app-detalhe *ngIf="listAmigosProximos.length > 0" [listAmigosProximos]="listAmigosProximos" [markers]="markers" 
+          [amigoSelecionado]="amigoSelecionado"></app-detalhe>
       </mat-card>
     </div>
   </div>

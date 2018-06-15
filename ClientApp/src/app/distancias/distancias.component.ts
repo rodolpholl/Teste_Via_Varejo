@@ -3,7 +3,8 @@ import { DistanciasService } from './distancias.service';
 import { AmigoModel } from '../models/amigo';
 import { TokenStorage } from '../core/token.storage';
 import { HttpClient } from '@angular/common/http';
-import { DetalheComponent } from './detalhe/detalhe/detalhe.component';
+import { marker } from '../models/markers';
+
 
 
 @Component({
@@ -20,7 +21,10 @@ export class DistanciasComponent implements OnInit {
 
   listAmigos: AmigoModel[] = [];
   listAmigosProximos: AmigoModel[] = [];
-  amigoSelecionado: number;
+  idAmigoSelecionado: number;
+  amigoSelecionado: marker;
+  markers: marker[] = [];
+  
 
 
 
@@ -36,9 +40,39 @@ export class DistanciasComponent implements OnInit {
 
   getAmigosProximos() {
 
-    this.distanciaService.getAmigosProximos(this.amigoSelecionado, 3).subscribe(data => {
+    let amigoSelect = this.listAmigos.find(x => x.id === this.idAmigoSelecionado);
+
+    this.amigoSelecionado =   {
+        lat: parseFloat(amigoSelect.latitude),
+        lng: parseFloat(amigoSelect.longitude),
+        label: amigoSelect.nome,
+        draggable: false
+    }
+
+    this.distanciaService.getAmigosProximos(this.idAmigoSelecionado, 3).subscribe(data => {
+
       this.listAmigosProximos = data;
+      
+      this.markers = [];
+      
+
+
+      for (let amigo of data){
+        this.markers.push({
+          lat: parseFloat(amigo.latitude),
+          lng: parseFloat(amigo.longitude),
+          label: amigo.nome,
+          draggable: false
+        });
+      }
+      
+      
+
+
+      
     })
+
+    
 
   }
 

@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import { FormsModule } from '@angular/forms';
+import { AgmCoreModule } from '@agm/core';
 
 import { AppRoutingModule, routingComponents } from './core/app-routing.module';
 import { AppComponent } from './app.component';
@@ -18,7 +19,6 @@ import { UserService } from './users/users.service';
 import { AddUserComponent } from './users/dialog/add-user/add-user.component';
 import { EditUserComponent } from './users/dialog/edit-user/edit-user.component';
 import { DeleteUserComponent } from './users/dialog/delete-user/delete-user.component';
-import { AmigosComponent } from './amigos/amigos.component';
 import { AddAmigoComponent } from './amigos/dialogs/add-amigo/add-amigo.component';
 import { EditAmigoComponent } from './amigos/dialogs/edit-amigo/edit-amigo.component';
 import { DeleteAmigoComponent } from './amigos/dialogs/delete-amigo/delete-amigo.component';
@@ -59,7 +59,11 @@ import { DetalheComponent } from './distancias/detalhe/detalhe/detalhe.component
     MatButtonModule,
     MatSidenavModule,
     MatIconModule,
-    MatListModule
+    MatListModule,
+    AgmCoreModule.forRoot({
+      //apiKey: 'AIzaSyBIvsKCZpmEnsy6jt4QYtwIKoL4eun3Yus'
+      apiKey: 'AIzaSyAFgM81Qz-SwfTzUsr4F51AgDj0HdN88CQ'
+    })
   ],
   entryComponents: [
     ErrorDialogComponent,
